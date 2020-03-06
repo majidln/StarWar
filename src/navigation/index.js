@@ -15,12 +15,12 @@ function MainStackNavigator() {
         screenOptions={{
           gestureEnabled: true,
           headerStyle: {
-            backgroundColor: '#101010',
+            backgroundColor: 'blue',
           },
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerTintColor: '#ffd700',
+          headerTintColor: 'white',
           headerBackTitleVisible: false,
         }}
         headerMode="float">
