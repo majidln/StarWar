@@ -1,0 +1,20 @@
+import React, {Component} from 'react';
+import {SafeAreaView} from 'react-native';
+import theme from './../services/theme';
+
+export class Container extends Component {
+  render() {
+    return (
+      <SafeAreaView style={[styles.wrapper, this.props.style]}>
+        {this.props.children}
+      </SafeAreaView>
+    );
+  }
+}
+
+const styles = {
+  wrapper: {
+    flex: 1,
+    backgroundColor: theme.primary,
+  },
+};

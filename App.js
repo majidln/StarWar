@@ -10,6 +10,15 @@
 import React from 'react'
 import MainStackNavigator from './src/navigation';
 
+import { ApolloProvider, Query } from "react-apollo";
+import ApolloClient from "apollo-boost";
+
+const client = new ApolloClient({ uri: 'https://swapi-graphql.netlify.com/.netlify/functions/index' });
+
 export default function App() {
-  return <MainStackNavigator />
+  return (
+    <ApolloProvider client={client}>
+      <MainStackNavigator />
+    </ApolloProvider>
+  )
 }
