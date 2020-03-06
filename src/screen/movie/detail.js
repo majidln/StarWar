@@ -16,10 +16,10 @@ class DetailScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const {eposodeID} = this.props.route.params;
+    const {id} = this.props.route.params;
     const query = `
     query {
-      film(filmID: ${eposodeID}) {
+      film(id: \"${id}\") {
         title
         episodeID
         releaseDate

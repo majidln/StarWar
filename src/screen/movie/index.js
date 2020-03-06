@@ -4,6 +4,7 @@ import {
   View,
   Text,
   FlatList,
+  Button,
   ActivityIndicator,
 } from 'react-native';
 import gql from 'graphql-tag';
@@ -38,7 +39,7 @@ class ListScreen extends React.Component {
   onSelect = movie => {
     console.log('movie: ', movie);
     this.props.navigation.navigate('Detail', {
-      eposodeID: movie.episodeID,
+      id: movie.id,
       name: movie.title,
     });
   };
@@ -84,6 +85,20 @@ class ListScreen extends React.Component {
 
   static navigationOptions = ({navigation}) => ({
     title: '',
+    headerRight: () => (
+      <Button
+        onPress={() => alert('This is a button!')}
+        title="Filter"
+        color="red"
+      />
+    ),
+    headerLeft: () => (
+      <Button
+        onPress={() => alert('This is a button!')}
+        title="Search"
+        color="red"
+      />
+    ),
   });
 }
 
