@@ -4,13 +4,14 @@ import {
   View,
   Text,
   FlatList,
-  Button,
+  TouchableOpacity,
+  TextInput,
   ActivityIndicator,
 } from 'react-native';
 import gql from 'graphql-tag';
-import {ApolloProvider, Query} from 'react-apollo';
+import {Query} from 'react-apollo';
 import Item from './item';
-import {Container} from './../../components';
+import {Container, Icon} from './../../components';
 
 const query = gql`
   query {
@@ -33,7 +34,16 @@ class ListScreen extends React.Component {
 
     this.state = {
       query: null,
+      searching: false,
+      searchName: '',
     };
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({
+      startSearch: this.startSearch,
+      startFilter: this.startFilter,
+    });
   }
 
   onSelect = movie => {
@@ -44,9 +54,24 @@ class ListScreen extends React.Component {
     });
   };
 
+  startSearch = () => {
+    // trigger when search icon press in toolbar
+    if (this.state.searching) {
+      // clear search content
+      this.setState({searchName: ''});
+    }
+    // toggle search box
+    this.setState({searching: !this.state.searching});
+  };
+
+  startFilter = () => {
+    // trigger when filter icon press in toolbar
+  };
+
   render() {
     return (
       <Container style={styles.wrapper}>
+        {this.renderSearchBox()}
         <Query query={query}>
           {({loading, error, data}) => {
             if (loading) {
@@ -64,14 +89,18 @@ class ListScreen extends React.Component {
                     data={data.allFilms.edges}
                     keyExtractor={item => item.node.id.toString()}
                     renderItem={({item}) => {
-                      return (
-                        <View style={styles.itemWrapper}>
-                          <Item
-                            movie={item.node}
-                            onSelect={() => this.onSelect(item.node)}
-                          />
-                        </View>
-                      );
+                      if (item.node.title.includes(this.state.searchName)) {
+                        return (
+                          <View style={styles.itemWrapper}>
+                            <Item
+                              movie={item.node}
+                              onSelect={() => this.onSelect(item.node)}
+                            />
+                          </View>
+                        );
+                      } else {
+                        return null;
+                      }
                     }}
                   />
                 </View>
@@ -83,21 +112,36 @@ class ListScreen extends React.Component {
     );
   }
 
-  static navigationOptions = ({navigation}) => ({
+  renderSearchBox = () => {
+    if (this.state.searching) {
+      return (
+        <View style={styles.searchBoxWrapper}>
+          <TextInput
+            style={styles.searchBox}
+            onChangeText={text => this.setState({searchName: text})}
+            value={this.state.searchName}
+            placeholder="Enter part of movie name"
+          />
+        </View>
+      );
+    }
+  };
+
+  static navigationOptions = ({navigation, route}) => ({
     title: '',
     headerRight: () => (
-      <Button
-        onPress={() => alert('This is a button!')}
-        title="Filter"
-        color="red"
-      />
+      <TouchableOpacity
+        onPress={() => route.params.startFilter && route.params.startFilter()}
+        style={styles.headerIcon}>
+        <Icon name="filter" />
+      </TouchableOpacity>
     ),
     headerLeft: () => (
-      <Button
-        onPress={() => alert('This is a button!')}
-        title="Search"
-        color="red"
-      />
+      <TouchableOpacity
+        onPress={() => route.params.startSearch && route.params.startSearch()}
+        style={styles.headerIcon}>
+        <Icon name="search" />
+      </TouchableOpacity>
     ),
   });
 }
@@ -116,6 +160,19 @@ const styles = StyleSheet.create({
   },
   itemWrapper: {
     padding: 10,
+  },
+  headerIcon: {
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  searchBoxWrapper: {
+    padding: 10,
+  },
+  searchBox: {
+    borderRadius: 10,
+    backgroundColor: '#f2f2f2',
+    height: 45,
+    fontSize: 18,
   },
 });
 
