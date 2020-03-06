@@ -107,16 +107,15 @@ const styles = StyleSheet.create({
   wrapper: {},
   title: {
     fontSize: 24,
+    textAlign: 'center',
     fontWeight: 'bold',
-    color: 'white',
   },
   episodeID: {
-    fontSize: 14,
-    color: 'white',
+    fontSize: 16,
+    color: '#7d7d7d',
   },
   release: {
     fontSize: 14,
-    color: 'white',
   },
   row: {
     paddingTop: 8,
@@ -128,16 +127,17 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   charactersWrapper: {
-    borderBottomWidth: 1,
-    borderBottomColor: 'white',
-    paddingTop: 10,
+    margin: 10,
     paddingBottom: 10,
+    padding: 15,
+    backgroundColor: '#f2f2f2',
+    borderRadius: 35,
   },
   charactersTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     color: theme.primary,
-    backgroundColor: '#fed947',
+    backgroundColor: '#854b69',
     padding: 10,
     marginTop: 8,
     textAlign: 'center',
@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
   charactersName: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: 'white',
     paddingLeft: 10,
     paddingRight: 50,
   },
@@ -161,7 +160,6 @@ const styles = StyleSheet.create({
   },
   charactersSpecies: {
     fontSize: 16,
-    color: 'white',
     paddingLeft: 10,
     paddingRight: 50,
   },

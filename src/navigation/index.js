@@ -4,7 +4,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import ListScreen from '../screen/movie/index';
 import DetailScreen from '../screen/movie/detail';
-import ItemScreen from '../screen/movie/item';
 
 import theme from './../services/theme';
 
@@ -34,19 +33,12 @@ function MainStackNavigator() {
         <Stack.Screen
           name="Home"
           component={ListScreen}
-          options={{title: 'Movies'}}
-        />
-        <Stack.Screen
-          name="Item"
-          component={ItemScreen}
-          options={{title: 'Item Screen'}}
+          options={ListScreen.navigationOptions}
         />
         <Stack.Screen
           name="Detail"
           component={DetailScreen}
-          options={({route}) => ({
-            headerTitle: route.params && route.params.name,
-          })}
+          options={{title: ''}}
         />
       </Stack.Navigator>
     </NavigationContainer>

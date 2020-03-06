@@ -1,5 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, FlatList, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import gql from 'graphql-tag';
 import {ApolloProvider, Query} from 'react-apollo';
 import Item from './item';
@@ -50,19 +56,24 @@ class ListScreen extends React.Component {
             }
             if (data && data.allFilms) {
               return (
-                <FlatList
-                  style={styles.listWrapper}
-                  data={data.allFilms.edges}
-                  keyExtractor={item => item.node.id.toString()}
-                  renderItem={({item}) => {
-                    return (
-                      <Item
-                        movie={item.node}
-                        onSelect={() => this.onSelect(item.node)}
-                      />
-                    );
-                  }}
-                />
+                <View style={styles.listWrapper}>
+                  <Text style={styles.title}>Start War</Text>
+                  <FlatList
+                    style={styles.listWrapper}
+                    data={data.allFilms.edges}
+                    keyExtractor={item => item.node.id.toString()}
+                    renderItem={({item}) => {
+                      return (
+                        <View style={styles.itemWrapper}>
+                          <Item
+                            movie={item.node}
+                            onSelect={() => this.onSelect(item.node)}
+                          />
+                        </View>
+                      );
+                    }}
+                  />
+                </View>
               );
             }
           }}
@@ -70,6 +81,10 @@ class ListScreen extends React.Component {
       </Container>
     );
   }
+
+  static navigationOptions = ({navigation}) => ({
+    title: '',
+  });
 }
 
 const styles = StyleSheet.create({
@@ -78,6 +93,14 @@ const styles = StyleSheet.create({
   },
   listWrapper: {
     flex: 1,
+  },
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  itemWrapper: {
+    padding: 10,
   },
 });
 

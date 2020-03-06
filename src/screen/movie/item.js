@@ -12,7 +12,7 @@ class ItemScreen extends React.Component {
         }}>
         <Text style={styles.title}>{movie.title}</Text>
         <Text style={styles.episodeID}>Episode: {movie.episodeID}</Text>
-        <Text style={styles.release}>{movie.releaseDate}</Text>
+        <Text style={styles.release}>Release Date: {movie.releaseDate}</Text>
       </TouchableOpacity>
     );
   }
@@ -21,22 +21,20 @@ class ItemScreen extends React.Component {
 const styles = StyleSheet.create({
   wrapper: {
     padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: 'white',
+    backgroundColor: '#f2f2f2',
+    borderRadius: 35,
   },
   title: {
-    fontSize: 18,
-    color: 'white',
+    fontSize: 20,
   },
   episodeID: {
-    fontSize: 14,
+    fontSize: 16,
     padding: 5,
-    color: 'white',
+    color: '#7d7d7d',
   },
   release: {
     textAlign: 'right',
     fontSize: 14,
-    color: 'white',
   },
 });
 

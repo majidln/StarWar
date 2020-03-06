@@ -1,3 +1,3 @@
 export default {
-  primary: '#202020',
+  primary: '#ffffff',
 };
