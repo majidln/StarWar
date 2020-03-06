@@ -1,16 +1,13 @@
 import 'react-native';
 import React from 'react';
-import App from '../App';
+import MovieList from '../src/screen/movie/index';
 
 import renderer from 'react-test-renderer';
 
-// global.fetch = jest.fn(() => new Promise(resolve => resolve()));
-// jest.mock('react-native-gesture-handler', () => {});
-
-
 it('renders correctly', () => {
+  jest.useFakeTimers()
   const tree = renderer.create(
-    <App />
+    <MovieList />
     ).toJSON();
   expect(tree).toMatchSnapshot();
 });
