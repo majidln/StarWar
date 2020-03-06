@@ -26,7 +26,7 @@ function MainStackNavigator() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerTintColor: 'white',
+          headerTintColor: theme.secondary,
           headerBackTitleVisible: false,
         }}
         headerMode="float">

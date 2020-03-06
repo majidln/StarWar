@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import gql from 'graphql-tag';
 import {ApolloProvider, Query} from 'react-apollo';
-import Item from './item';
-import {Container, Icon} from './../../components';
+import {Container} from './../../components';
 import theme from './../../services/theme';
 
 class DetailScreen extends React.Component {
@@ -106,13 +105,6 @@ class DetailScreen extends React.Component {
   // set screen navigation options
   static navigationOptions = ({navigation, route}) => ({
     title: '',
-    headerLeft: () => (
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.headerIcon}>
-        <Icon name="chevron-left" />
-      </TouchableOpacity>
-    ),
   });
 }
 
