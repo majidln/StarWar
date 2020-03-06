@@ -5,11 +5,12 @@ import {
   Text,
   ScrollView,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import gql from 'graphql-tag';
 import {ApolloProvider, Query} from 'react-apollo';
 import Item from './item';
-import {Container} from './../../components';
+import {Container, Icon} from './../../components';
 import theme from './../../services/theme';
 
 class DetailScreen extends React.Component {
@@ -61,7 +62,6 @@ class DetailScreen extends React.Component {
                 return <Text>An error ocurred</Text>;
               }
               if (data && data.film) {
-                console.log('data is:', data);
                 return this.renderDetail(data.film);
               }
             }}
@@ -72,7 +72,7 @@ class DetailScreen extends React.Component {
   }
 
   renderDetail = film => {
-    console.log('render film', this.props.route);
+    // render movie detail
     return (
       <View>
         <Text style={[styles.title, styles.row]}>{film.title}</Text>
@@ -91,6 +91,7 @@ class DetailScreen extends React.Component {
   };
 
   renderCharacterConnection = character => {
+    // render character detail in card
     return (
       <View style={styles.charactersWrapper}>
         <Text style={styles.charactersName}>{character.name}</Text>
@@ -101,6 +102,18 @@ class DetailScreen extends React.Component {
       </View>
     );
   };
+
+  // set screen navigation options
+  static navigationOptions = ({navigation, route}) => ({
+    title: '',
+    headerLeft: () => (
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.headerIcon}>
+        <Icon name="chevron-left" />
+      </TouchableOpacity>
+    ),
+  });
 }
 
 const styles = StyleSheet.create({
@@ -162,6 +175,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 10,
     paddingRight: 50,
+  },
+  headerIcon: {
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 });
 

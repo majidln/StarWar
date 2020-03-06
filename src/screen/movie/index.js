@@ -36,6 +36,7 @@ class ListScreen extends React.Component {
       query: null,
       searching: false,
       searchName: '',
+      ascendSort: true,
     };
   }
 
@@ -66,6 +67,9 @@ class ListScreen extends React.Component {
 
   startFilter = () => {
     // trigger when filter icon press in toolbar
+    this.setState({ascendSort: !this.state.ascendSort});
+
+    // TODO add sort feature
   };
 
   render() {
@@ -89,7 +93,13 @@ class ListScreen extends React.Component {
                     data={data.allFilms.edges}
                     keyExtractor={item => item.node.id.toString()}
                     renderItem={({item}) => {
-                      if (item.node.title.includes(this.state.searchName)) {
+                      // I could not find search feature in qraphql server, so I decided to filter movie localy
+                      if (
+                        item.node.title
+                          .toLocaleLowerCase()
+                          .includes(this.state.searchName.toLocaleLowerCase())
+                      ) {
+                        // show matched item with search box content
                         return (
                           <View style={styles.itemWrapper}>
                             <Item
@@ -99,6 +109,7 @@ class ListScreen extends React.Component {
                           </View>
                         );
                       } else {
+                        // dont show matched item with search box content
                         return null;
                       }
                     }}
@@ -113,6 +124,7 @@ class ListScreen extends React.Component {
   }
 
   renderSearchBox = () => {
+    // if search icon in toolbar clicked, show the serach box
     if (this.state.searching) {
       return (
         <View style={styles.searchBoxWrapper}>
@@ -122,18 +134,24 @@ class ListScreen extends React.Component {
             value={this.state.searchName}
             placeholder="Enter part of movie name"
           />
+          <TouchableOpacity
+            style={styles.searchIconWrapper}
+            onPress={() => this.startSearch()}>
+            <Icon name="close" size={20} color="#000" />
+          </TouchableOpacity>
         </View>
       );
     }
   };
 
+  // set screen navigation options
   static navigationOptions = ({navigation, route}) => ({
     title: '',
     headerRight: () => (
       <TouchableOpacity
         onPress={() => route.params.startFilter && route.params.startFilter()}
         style={styles.headerIcon}>
-        <Icon name="filter" />
+        <Icon name="sort-amount-desc" />
       </TouchableOpacity>
     ),
     headerLeft: () => (
@@ -167,12 +185,26 @@ const styles = StyleSheet.create({
   },
   searchBoxWrapper: {
     padding: 10,
-  },
-  searchBox: {
-    borderRadius: 10,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#f2f2f2',
     height: 45,
+  },
+  searchIconWrapper: {
+    position: 'absolute',
+    right: 10,
+  },
+  searchBox: {
+    height: 45,
     fontSize: 18,
+    flex: 1,
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingLeft: 0,
+    color: '#424242',
   },
 });
 

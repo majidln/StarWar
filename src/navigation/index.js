@@ -38,7 +38,7 @@ function MainStackNavigator() {
         <Stack.Screen
           name="Detail"
           component={DetailScreen}
-          options={{title: ''}}
+          options={DetailScreen.navigationOptions}
         />
       </Stack.Navigator>
     </NavigationContainer>
