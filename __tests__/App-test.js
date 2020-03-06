@@ -1,13 +1,13 @@
 import 'react-native';
 import React from 'react';
-import MovieList from '../src/screen/movie/index';
+import App from '../App';
 
 import renderer from 'react-test-renderer';
 
 it('renders correctly', () => {
   jest.useFakeTimers()
   const tree = renderer.create(
-    <MovieList />
+    <App />
     ).toJSON();
   expect(tree).toMatchSnapshot();
 });
