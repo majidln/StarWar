@@ -94,10 +94,11 @@ class DetailScreen extends React.Component {
     return (
       <View style={styles.charactersWrapper}>
         <Text style={styles.charactersName}>{character.name}</Text>
-        <Text style={styles.charactersgender}>{character.gender}</Text>
+        
         <Text style={styles.charactersSpecies}>
           Species: {character.species && character.species.name}
         </Text>
+        <Text style={styles.charactersgender}>{character.gender}</Text>
       </View>
     );
   };
