@@ -8,9 +8,10 @@ class ItemScreen extends React.Component {
       <TouchableOpacity
         style={styles.wrapper}
         onPress={() => {
-          console.log('item press');
+          this.props.onSelect && this.props.onSelect();
         }}>
         <Text style={styles.title}>{movie.title}</Text>
+        <Text style={styles.episodeID}>Episode: {movie.episodeID}</Text>
         <Text style={styles.release}>{movie.releaseDate}</Text>
       </TouchableOpacity>
     );
@@ -25,6 +26,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
+    color: 'white',
+  },
+  episodeID: {
+    fontSize: 14,
+    padding: 5,
     color: 'white',
   },
   release: {

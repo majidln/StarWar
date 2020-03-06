@@ -21,21 +21,20 @@ function MainStackNavigator() {
             backgroundColor: theme.primary,
             shadowRadius: 0,
             shadowOffset: {
-                height: 0,
+              height: 0,
             },
           },
           headerTitleStyle: {
             fontWeight: 'bold',
-            
           },
           headerTintColor: 'white',
           headerBackTitleVisible: false,
         }}
         headerMode="float">
         <Stack.Screen
-          name="Movies"
+          name="Home"
           component={ListScreen}
-          options={{title: 'Home Screen'}}
+          options={{title: 'Movies'}}
         />
         <Stack.Screen
           name="Item"
@@ -46,7 +45,7 @@ function MainStackNavigator() {
           name="Detail"
           component={DetailScreen}
           options={({route}) => ({
-            title: route.params.item.name,
+            headerTitle: route.params && route.params.name,
           })}
         />
       </Stack.Navigator>

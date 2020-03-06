@@ -29,8 +29,15 @@ class ListScreen extends React.Component {
     };
   }
 
-  render() {
+  onSelect = movie => {
+    console.log('movie: ', movie);
+    this.props.navigation.navigate('Detail', {
+      eposodeID: movie.episodeID,
+      name: movie.title,
+    });
+  };
 
+  render() {
     return (
       <Container style={styles.wrapper}>
         <Query query={query}>
@@ -48,7 +55,12 @@ class ListScreen extends React.Component {
                   data={data.allFilms.edges}
                   keyExtractor={item => item.node.id.toString()}
                   renderItem={({item}) => {
-                    return <Item movie={item.node} />;
+                    return (
+                      <Item
+                        movie={item.node}
+                        onSelect={() => this.onSelect(item.node)}
+                      />
+                    );
                   }}
                 />
               );
