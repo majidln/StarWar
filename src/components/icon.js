@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-FontAwesome.loadFont();
+// FontAwesome.loadFont();
 
 export class Icon extends Component {
   render() {
