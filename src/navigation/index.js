@@ -2,7 +2,7 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import ListScreen from '@screens/index';
+import ListScreen from '@screens/list';
 import DetailScreen from '@screens/detail';
 
 import theme from '@services/theme';
