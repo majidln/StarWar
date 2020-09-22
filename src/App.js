@@ -9,7 +9,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import MainStackNavigator from './navigation';
-import {ApolloProvider} from 'react-apollo';
+import {ApolloProvider} from '@apollo/client';
 import {client} from '@services/apollo';
 
 export default function App() {
