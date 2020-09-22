@@ -5,12 +5,11 @@ import {
   Text,
   ScrollView,
   ActivityIndicator,
-  TouchableOpacity,
 } from 'react-native';
 import gql from 'graphql-tag';
-import {ApolloProvider, Query} from 'react-apollo';
-import {Container} from './../../components';
-import theme from './../../services/theme';
+import {Query} from 'react-apollo';
+import {Container} from '@common-component';
+import theme from '@themes';
 
 class DetailScreen extends React.Component {
   constructor(props) {
@@ -94,7 +93,7 @@ class DetailScreen extends React.Component {
     return (
       <View style={styles.charactersWrapper}>
         <Text style={styles.charactersName}>{character.name}</Text>
-        
+
         <Text style={styles.charactersSpecies}>
           Species: {character.species && character.species.name}
         </Text>
