@@ -2,8 +2,8 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import ListScreen from '../screen/movie/index';
-import DetailScreen from '../screen/movie/detail';
+import ListScreen from '../screen/index';
+import DetailScreen from '../screen/detail';
 
 import theme from './../services/theme';
 

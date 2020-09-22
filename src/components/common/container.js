@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {SafeAreaView} from 'react-native';
-import theme from './../services/theme';
+import theme from './../../services/theme';
 
 export class Container extends Component {
   render() {

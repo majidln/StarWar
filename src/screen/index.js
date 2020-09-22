@@ -7,12 +7,12 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-  Image
+  Image,
 } from 'react-native';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
-import Item from './item';
-import {Container} from './../../components';
+import Item from './../components/screen/movie/item';
+import {Container} from './../components/common';
 
 const query = gql`
   query {
@@ -138,7 +138,10 @@ class ListScreen extends React.Component {
           <TouchableOpacity
             style={styles.searchIconWrapper}
             onPress={() => this.startSearch()}>
-            <Image style={styles.image} source={require('../../../assets/icons/close.png')} />
+            <Image
+              style={styles.image}
+              source={require('../../assets/icons/close.png')}
+            />
           </TouchableOpacity>
         </View>
       );
@@ -152,14 +155,20 @@ class ListScreen extends React.Component {
       <TouchableOpacity
         onPress={() => route.params.startFilter && route.params.startFilter()}
         style={styles.headerIcon}>
-        <Image style={styles.image} source={require('../../../assets/icons/sort.png')} />
+        <Image
+          style={styles.image}
+          source={require('../../assets/icons/sort.png')}
+        />
       </TouchableOpacity>
     ),
     headerLeft: () => (
       <TouchableOpacity
         onPress={() => route.params.startSearch && route.params.startSearch()}
         style={styles.headerIcon}>
-       <Image style={styles.image} source={require('../../../assets/icons/search.png')} />
+        <Image
+          style={styles.image}
+          source={require('../../assets/icons/search.png')}
+        />
       </TouchableOpacity>
     ),
   });
@@ -209,8 +218,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 20,
-    height: 20
-  }
+    height: 20,
+  },
 });
 
 export default ListScreen;
