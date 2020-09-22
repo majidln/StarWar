@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
-import {Container} from './../components/common/index';
-import theme from './../services/theme';
+import {Container} from '@common-component';
+import theme from '@themes';
 
 class DetailScreen extends React.Component {
   constructor(props) {

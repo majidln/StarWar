@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
-import Item from './../components/screen/movie/item';
-import {Container} from './../components/common';
+import Item from '@screen-component/movie/item';
+import {Container} from '@common-component';
 
 const query = gql`
   query {
