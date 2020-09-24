@@ -46,6 +46,7 @@ export default function list() {
     return (
       <View style={styles.itemWrapper}>
         <Text style={styles.title}>{item.node.title}</Text>
+        <Text style={styles.date}>{item.node.releaseDate}</Text>
       </View>
     );
   };
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
     width: windowWidth - 80,
     padding: 20,
     alignContent: 'center',
+    justifyContent: 'center',
   },
   item: {
     backgroundColor: '#f9c2ff',
@@ -79,7 +81,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
+  date: {
+    fontSize: 14,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  }
 });
