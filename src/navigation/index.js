@@ -14,26 +14,13 @@ function MainStackNavigator() {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Home"
-        screenOptions={{
-          gestureEnabled: true,
-          headerStyle: {
-            backgroundColor: theme.primary,
-            shadowRadius: 0,
-            shadowOffset: {
-              height: 0,
-            },
-          },
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerTintColor: theme.secondary,
-          headerBackTitleVisible: false,
-        }}
+        screenOptions={{headerShown: false}}
         headerMode="float">
         <Stack.Screen
           name="Home"
           component={ListScreen}
           options={ListScreen.navigationOptions}
+          header={null}
         />
         {/* <Stack.Screen
           name="Detail"
