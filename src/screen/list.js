@@ -1,7 +1,17 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  View,
+  FlatList,
+  StyleSheet,
+  StatusBar,
+  Dimensions,
+} from 'react-native';
 import {useQuery} from '@apollo/client';
 import {gql} from '@apollo/client';
+
+const windowWidth = Dimensions.get('window').width;
 
 const GET_ALL_FILMS = gql`
   query {
@@ -31,10 +41,62 @@ export default function list() {
     return <Text>No data!</Text>;
   }
 
+  const onViewableChanged = ({viewableItems, changed}) => {
+    console.log('Visible items are', viewableItems);
+    console.log('Changed in this iteration', changed);
+  };
+
   console.log('list is', data);
+  const renderItem = ({item, index}) => {
+    return (
+      <View style={styles.itemWrapper}>
+        <Text style={styles.title}>{item.node.title}</Text>
+        <Text style={styles.date}>{item.node.releaseDate}</Text>
+      </View>
+    );
+  };
+
   return (
-    <View>
-      <Text>In list component</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={data.allFilms.edges}
+        renderItem={renderItem}
+        keyExtractor={item => item.node.id}
+        horizontal={true}
+        onViewableItemsChanged={onViewableChanged}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 80,
+        }}
+      />
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  itemWrapper: {
+    width: windowWidth - 80,
+    padding: 20,
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 28,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  date: {
+    fontSize: 14,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+});
