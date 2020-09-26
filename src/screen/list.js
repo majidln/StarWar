@@ -46,7 +46,6 @@ export default function list() {
     console.log('Changed in this iteration', changed);
   };
 
-  console.log('list is', data);
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.itemWrapper}>
