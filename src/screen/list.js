@@ -7,6 +7,7 @@ import {
   StyleSheet,
   StatusBar,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import {useQuery} from '@apollo/client';
 import {gql} from '@apollo/client';
@@ -32,7 +33,11 @@ export default function list() {
   const {loading, data, error} = useQuery(GET_ALL_FILMS);
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return (
+      <View style={styles.loadingWrapper}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
   if (error) {
     return <Text>An error occurred</Text>;
@@ -75,6 +80,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+  },
+  loadingWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
   itemWrapper: {
     width: windowWidth - 80,
