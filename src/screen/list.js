@@ -8,6 +8,7 @@ import {
   StatusBar,
   Dimensions,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import {useQuery} from '@apollo/client';
 import {gql} from '@apollo/client';
@@ -40,7 +41,11 @@ export default function list() {
     );
   }
   if (error) {
-    return <Text>An error occurred</Text>;
+    return (
+      <View style={styles.errorWrapper}>
+        <Text style={styles.errorText}>An error occurred</Text>
+      </View>
+    );
   }
   if (!data) {
     return <Text>No data!</Text>;
@@ -85,6 +90,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+  },
+  errorWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    color: 'red',
   },
   itemWrapper: {
     width: windowWidth - 80,
