@@ -8,4 +8,4 @@
 * Test ```npm run test```
  `
  
-### QraphQl
+### Used https://strapi.io/ GraphQl endpoint
