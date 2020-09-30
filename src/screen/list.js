@@ -8,7 +8,6 @@ import {
   StatusBar,
   Dimensions,
   ActivityIndicator,
-  TouchableOpacity,
 } from 'react-native';
 import {useQuery} from '@apollo/client';
 import {gql} from '@apollo/client';
@@ -30,7 +29,7 @@ const GET_ALL_FILMS = gql`
   }
 `;
 
-export default function list() {
+export default function List() {
   const {loading, data, error} = useQuery(GET_ALL_FILMS);
 
   if (loading) {
