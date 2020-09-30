@@ -8,7 +8,6 @@ import {
   StatusBar,
   Dimensions,
   ActivityIndicator,
-  TouchableOpacity,
 } from 'react-native';
 import {useQuery} from '@apollo/client';
 import {gql} from '@apollo/client';
@@ -30,7 +29,7 @@ const GET_ALL_FILMS = gql`
   }
 `;
 
-export default function list() {
+export default function List() {
   const {loading, data, error} = useQuery(GET_ALL_FILMS);
 
   if (loading) {
@@ -51,11 +50,6 @@ export default function list() {
     return <Text>No data!</Text>;
   }
 
-  const onViewableChanged = ({viewableItems, changed}) => {
-    console.log('Visible items are', viewableItems);
-    console.log('Changed in this iteration', changed);
-  };
-
   const renderItem = ({item, index}) => {
     return (
       <View style={styles.itemWrapper}>
@@ -72,10 +66,6 @@ export default function list() {
         renderItem={renderItem}
         keyExtractor={item => item.node.id}
         horizontal={true}
-        onViewableItemsChanged={onViewableChanged}
-        viewabilityConfig={{
-          itemVisiblePercentThreshold: 80,
-        }}
       />
     </SafeAreaView>
   );
