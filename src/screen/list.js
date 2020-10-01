@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {useQuery} from '@apollo/client';
 import {gql} from '@apollo/client';
+import {Container} from '@common-component';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -60,14 +61,14 @@ export default function List() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Container style={styles.container}>
       <FlatList
         data={data.allFilms.edges}
         renderItem={renderItem}
         keyExtractor={item => item.node.id}
         horizontal={true}
       />
-    </SafeAreaView>
+    </Container>
   );
 }
 
