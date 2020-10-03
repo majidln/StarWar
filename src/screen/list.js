@@ -5,7 +5,6 @@ import {
   View,
   FlatList,
   StyleSheet,
-  StatusBar,
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
@@ -82,7 +81,6 @@ export default function List() {
       </View>
     );
   };
-  console.log('scrollX', scrollX);
   return (
     <Container style={styles.container}>
       <Animated.FlatList
