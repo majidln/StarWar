@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   StyleSheet,
+  Image,
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
@@ -31,6 +32,15 @@ const GET_ALL_FILMS = gql`
     }
   }
 `;
+
+const posters = [
+  require('./../../assets/poster/1.png'),
+  require('./../../assets/poster/2.png'),
+  require('./../../assets/poster/3.png'),
+  require('./../../assets/poster/4.png'),
+  require('./../../assets/poster/5.png'),
+  require('./../../assets/poster/6.png'),
+];
 
 export default function List() {
   let {loading, data, error} = useQuery(GET_ALL_FILMS, {});
@@ -74,6 +84,7 @@ export default function List() {
         <Animated.View
           style={{...styles.itemInnerWrapper, transform: [{translateY}]}}>
           <View style={styles.contentWrapper}>
+            <Image style={styles.poster} source={posters[index - 1]} />
             <Text style={styles.title}>{item.node.title}</Text>
             <Text style={styles.date}>{item.node.releaseDate}</Text>
           </View>
@@ -139,6 +150,13 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     backgroundColor: 'white',
+    borderRadius: 34,
+    padding: 8,
+  },
+  poster: {
+    resizeMode: 'cover',
+    width: ITEM_SIZE - SPACING * 5 - 8,
+    height: ITEM_SIZE - SPACING * 5 - 8,
     borderRadius: 34,
   },
   title: {
