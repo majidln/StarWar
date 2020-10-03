@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  SafeAreaView,
+  Animated,
   Text,
   View,
   FlatList,
@@ -13,7 +13,10 @@ import {useQuery} from '@apollo/client';
 import {gql} from '@apollo/client';
 import {Container} from '@common-component';
 
-const windowWidth = Dimensions.get('window').width;
+const width = Dimensions.get('window').width;
+const SPACING = 10;
+const ITEM_SIZE = width * 0.72;
+const SPACER_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 
 const GET_ALL_FILMS = gql`
   query {
@@ -31,7 +34,8 @@ const GET_ALL_FILMS = gql`
 `;
 
 export default function List() {
-  const {loading, data, error} = useQuery(GET_ALL_FILMS);
+  let {loading, data, error} = useQuery(GET_ALL_FILMS, {});
+  const scrollX = React.useRef(new Animated.Value(0)).current;
 
   if (loading) {
     return (
@@ -51,22 +55,55 @@ export default function List() {
     return <Text>No data!</Text>;
   }
 
+  // add dummy
+
   const renderItem = ({item, index}) => {
+    if (!item.node) {
+      return <View style={styles.dummySpacer} />;
+    }
+    const inputRange = [
+      (index - 2) * ITEM_SIZE,
+      (index - 1) * ITEM_SIZE,
+      (index + 2) * ITEM_SIZE,
+    ];
+    const translateY = scrollX.interpolate({
+      inputRange,
+      outputRange: [0, -50, 0],
+    });
     return (
       <View style={styles.itemWrapper}>
-        <Text style={styles.title}>{item.node.title}</Text>
-        <Text style={styles.date}>{item.node.releaseDate}</Text>
+        <Animated.View
+          style={{...styles.itemInnerWrapper, transform: [{translateY}]}}>
+          <View style={styles.contentWrapper}>
+            <Text style={styles.title}>{item.node.title}</Text>
+            <Text style={styles.date}>{item.node.releaseDate}</Text>
+          </View>
+        </Animated.View>
       </View>
     );
   };
-
+  console.log('scrollX', scrollX);
   return (
     <Container style={styles.container}>
-      <FlatList
-        data={data.allFilms.edges}
+      <Animated.FlatList
+        showsHorizontalScrollIndicator={false}
+        data={[
+          {key: 'left-spacer'},
+          ...data.allFilms.edges,
+          {key: 'right-spacer'},
+        ]}
         renderItem={renderItem}
-        keyExtractor={item => item.node.id}
+        keyExtractor={item => item.key || item.node.id}
         horizontal={true}
+        snapToInterval={ITEM_SIZE}
+        contentContainerStyle={styles.listContentContainer}
+        decelerationRate={0}
+        bounces={false}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {x: scrollX}}}],
+          {useNativeDriver: true},
+        )}
+        scrollEventThrottle={16}
       />
     </Container>
   );
@@ -75,7 +112,7 @@ export default function List() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    backgroundColor: 'lightgray',
   },
   loadingWrapper: {
     alignItems: 'center',
@@ -91,20 +128,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'red',
   },
+  listContentContainer: {},
   itemWrapper: {
-    width: windowWidth - 80,
-    padding: 20,
-    alignContent: 'center',
+    width: ITEM_SIZE,
+    alignItems: 'center',
     justifyContent: 'center',
   },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+  itemInnerWrapper: {
+    width: ITEM_SIZE,
+    marginHorizontal: SPACING,
+    padding: SPACING * 2,
+  },
+  contentWrapper: {
+    backgroundColor: 'white',
+    borderRadius: 34,
   },
   title: {
-    fontSize: 28,
+    fontSize: 22,
     textAlign: 'center',
     fontWeight: 'bold',
   },
@@ -112,5 +152,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  dummySpacer: {
+    width: SPACER_ITEM_SIZE,
   },
 });
