@@ -12,11 +12,17 @@ import {
 import {useQuery} from '@apollo/client';
 import {gql} from '@apollo/client';
 import {Container} from '@common-component';
+import MaskedView from '@react-native-community/masked-view';
+import Svg, {Rect} from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
 
-const width = Dimensions.get('window').width;
+const AnimatedSvg = Animated.createAnimatedComponent(Svg);
+
+const {width, height} = Dimensions.get('window');
 const SPACING = 10;
 const ITEM_SIZE = width * 0.72;
 const SPACER_ITEM_SIZE = (width - ITEM_SIZE) / 2;
+const BACKDROP_HEIGHT = height * 0.6;
 
 const GET_ALL_FILMS = gql`
   query {
@@ -41,6 +47,51 @@ const posters = [
   require('./../../assets/poster/5.png'),
   require('./../../assets/poster/6.png'),
 ];
+
+const Backdrop = ({movies, scrollX}) => {
+  return (
+    <View style={styles.backdropWrapper}>
+      <FlatList
+        data={movies}
+        contentContainerStyle={{width, height: BACKDROP_HEIGHT}}
+        keyExtractor={(item, index) => 'backdrops_' + index.toString()}
+        renderItem={({item, index}) => {
+          if (!item.node) {
+            return null;
+          }
+          const inputRange = [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE];
+
+          const translateX = scrollX.interpolate({
+            inputRange,
+            outputRange: [-width, 0],
+          });
+          return (
+            <MaskedView
+              style={styles.maskedViewWrapper}
+              maskElement={
+                <AnimatedSvg
+                  width={width}
+                  height={height}
+                  viewBox={`0 0 ${width} ${height}`}
+                  style={{transform: [{translateX}]}}>
+                  <Rect x="0" y="0" width={width} height={height} fill="red" />
+                </AnimatedSvg>
+              }>
+              <Image
+                style={styles.backdropPoster}
+                source={posters[index - 1]}
+              />
+            </MaskedView>
+          );
+        }}
+      />
+      <LinearGradient
+        colors={['transparent', 'white']}
+        style={styles.gradient}
+      />
+    </View>
+  );
+};
 
 export default function List() {
   let {loading, data, error} = useQuery(GET_ALL_FILMS, {});
@@ -77,7 +128,7 @@ export default function List() {
     ];
     const translateY = scrollX.interpolate({
       inputRange,
-      outputRange: [0, -50, 0],
+      outputRange: [100, 50, 100],
     });
     return (
       <View style={styles.itemWrapper}>
@@ -92,17 +143,19 @@ export default function List() {
       </View>
     );
   };
+  const movies = [
+    {key: 'left-spacer'},
+    ...data.allFilms.edges,
+    {key: 'right-spacer'},
+  ];
   return (
     <Container style={styles.container}>
+      <Backdrop movies={movies} scrollX={scrollX} />
       <Animated.FlatList
         showsHorizontalScrollIndicator={false}
-        data={[
-          {key: 'left-spacer'},
-          ...data.allFilms.edges,
-          {key: 'right-spacer'},
-        ]}
+        data={movies}
         renderItem={renderItem}
-        keyExtractor={item => item.key || item.node.id}
+        keyExtractor={(item, index) => index.toString()}
         horizontal={true}
         snapToInterval={ITEM_SIZE}
         contentContainerStyle={styles.listContentContainer}
@@ -171,5 +224,28 @@ const styles = StyleSheet.create({
   },
   dummySpacer: {
     width: SPACER_ITEM_SIZE,
+  },
+  backdropWrapper: {
+    position: 'absolute',
+    width,
+    height: BACKDROP_HEIGHT,
+  },
+  maskedViewWrapper: {
+    position: 'absolute',
+    width,
+    height: BACKDROP_HEIGHT,
+  },
+  backdropPoster: {
+    width,
+    height: BACKDROP_HEIGHT,
+    resizeMode: 'cover',
+  },
+  gradient: {
+    width,
+    height: BACKDROP_HEIGHT,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
