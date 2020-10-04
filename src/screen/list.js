@@ -50,14 +50,23 @@ const posters = [
 
 const Backdrop = ({movies, scrollX}) => {
   return (
-    <View style={styles.backdropWrapper}>
+    <View
+      style={{
+        position: 'absolute',
+        width,
+        height: BACKDROP_HEIGHT,
+      }}>
       <FlatList
         data={movies}
-        contentContainerStyle={{width, height: BACKDROP_HEIGHT}}
         keyExtractor={(item, index) => 'backdrops_' + index.toString()}
+        contentContainerStyle={{
+          position: 'absolute',
+          width,
+          height: BACKDROP_HEIGHT,
+        }}
         renderItem={({item, index}) => {
           if (!item.node) {
-            return null;
+            return <Text />;
           }
           const inputRange = [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE];
 
@@ -67,7 +76,7 @@ const Backdrop = ({movies, scrollX}) => {
           });
           return (
             <MaskedView
-              style={styles.maskedViewWrapper}
+              style={{position: 'absolute', backgroundColor: 'blue'}}
               maskElement={
                 <AnimatedSvg
                   width={width}
@@ -78,7 +87,8 @@ const Backdrop = ({movies, scrollX}) => {
                 </AnimatedSvg>
               }>
               <Image
-                style={styles.backdropPoster}
+                style={{width, height: BACKDROP_HEIGHT}}
+                resizeMode="cover"
                 source={posters[index - 1]}
               />
             </MaskedView>
@@ -87,7 +97,12 @@ const Backdrop = ({movies, scrollX}) => {
       />
       <LinearGradient
         colors={['transparent', 'white']}
-        style={styles.gradient}
+        style={{
+          width,
+          height: BACKDROP_HEIGHT,
+          position: 'absolute',
+          bottom: 0,
+        }}
       />
     </View>
   );
