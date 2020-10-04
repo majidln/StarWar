@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   Animated,
@@ -50,23 +51,14 @@ const posters = [
 
 const Backdrop = ({movies, scrollX}) => {
   return (
-    <View
-      style={{
-        position: 'absolute',
-        width,
-        height: BACKDROP_HEIGHT,
-      }}>
+    <View style={styles.backdropWrapper}>
       <FlatList
         data={movies}
         keyExtractor={(item, index) => 'backdrops_' + index.toString()}
-        contentContainerStyle={{
-          position: 'absolute',
-          width,
-          height: BACKDROP_HEIGHT,
-        }}
+        contentContainerStyle={styles.backdrop}
         renderItem={({item, index}) => {
           if (!item.node) {
-            return <Text />;
+            return <Text style={{height: 1}} />;
           }
           const inputRange = [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE];
 
@@ -76,7 +68,7 @@ const Backdrop = ({movies, scrollX}) => {
           });
           return (
             <MaskedView
-              style={{position: 'absolute', backgroundColor: 'blue'}}
+              style={styles.maskedViewWrapper}
               maskElement={
                 <AnimatedSvg
                   width={width}
@@ -97,12 +89,7 @@ const Backdrop = ({movies, scrollX}) => {
       />
       <LinearGradient
         colors={['transparent', 'white']}
-        style={{
-          width,
-          height: BACKDROP_HEIGHT,
-          position: 'absolute',
-          bottom: 0,
-        }}
+        style={styles.gradient}
       />
     </View>
   );
@@ -245,11 +232,12 @@ const styles = StyleSheet.create({
     width,
     height: BACKDROP_HEIGHT,
   },
-  maskedViewWrapper: {
+  backdrop: {
     position: 'absolute',
     width,
     height: BACKDROP_HEIGHT,
   },
+  maskedViewWrapper: {position: 'absolute', backgroundColor: 'blue'},
   backdropPoster: {
     width,
     height: BACKDROP_HEIGHT,
@@ -260,7 +248,5 @@ const styles = StyleSheet.create({
     height: BACKDROP_HEIGHT,
     position: 'absolute',
     bottom: 0,
-    left: 0,
-    right: 0,
   },
 });
