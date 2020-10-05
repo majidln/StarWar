@@ -140,7 +140,9 @@ export default function List({navigation}) {
           <TouchableOpacity
             style={styles.contentWrapper}
             onPress={() => {
-              navigation.navigate('Detail', {movie: item});
+              navigation.navigate('Detail', {
+                movie: {...item, poster: posters[index - 1]},
+              });
             }}>
             <Image style={styles.poster} source={posters[index - 1]} />
             <Text style={styles.title}>{item.node.title}</Text>
