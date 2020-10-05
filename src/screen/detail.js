@@ -18,22 +18,16 @@ export default function Detail({route}) {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    alignItems: 'flex-start',
-    justifyContent: 'flex-end',
-    flexDirection: 'column',
-    backgroundColor: 'red',
-    height: POSTER_HEIGHT,
-  },
+  wrapper: {},
   poster: {
     height: POSTER_HEIGHT,
     width: '100%',
     resizeMode: 'cover',
-    position: 'absolute',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
+    backgroundColor: 'white',
   },
 });
