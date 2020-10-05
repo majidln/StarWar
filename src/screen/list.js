@@ -9,6 +9,7 @@ import {
   Image,
   Dimensions,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import {useQuery} from '@apollo/client';
 import {gql} from '@apollo/client';
@@ -95,7 +96,7 @@ const Backdrop = ({movies, scrollX}) => {
   );
 };
 
-export default function List() {
+export default function List({navigation}) {
   let {loading, data, error} = useQuery(GET_ALL_FILMS, {});
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
@@ -136,11 +137,15 @@ export default function List() {
       <View style={styles.itemWrapper}>
         <Animated.View
           style={{...styles.itemInnerWrapper, transform: [{translateY}]}}>
-          <View style={styles.contentWrapper}>
+          <TouchableOpacity
+            style={styles.contentWrapper}
+            onPress={() => {
+              navigation.navigate('Detail', {movie: item});
+            }}>
             <Image style={styles.poster} source={posters[index - 1]} />
             <Text style={styles.title}>{item.node.title}</Text>
             <Text style={styles.date}>{item.node.releaseDate}</Text>
-          </View>
+          </TouchableOpacity>
         </Animated.View>
       </View>
     );
