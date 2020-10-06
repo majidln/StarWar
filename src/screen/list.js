@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useQuery} from '@apollo/client';
+import {SharedElement} from 'react-navigation-shared-element';
 import {gql} from '@apollo/client';
 import {Container} from '@common-component';
 import MaskedView from '@react-native-community/masked-view';
@@ -118,8 +119,6 @@ export default function List({navigation}) {
     return <Text>No data!</Text>;
   }
 
-  // add dummy
-
   const renderItem = ({item, index}) => {
     if (!item.node) {
       return <View style={styles.dummySpacer} />;
@@ -133,6 +132,7 @@ export default function List({navigation}) {
       inputRange,
       outputRange: [100, 50, 100],
     });
+    console.log('item is', `item.${item.node.id}.poster`);
     return (
       <View style={styles.itemWrapper}>
         <Animated.View
@@ -140,12 +140,16 @@ export default function List({navigation}) {
           <TouchableOpacity
             style={styles.contentWrapper}
             onPress={() => {
-              navigation.navigate('Detail', {
+              navigation.push('Detail', {
                 movie: {...item, poster: posters[index - 1]},
               });
             }}>
-            <Image style={styles.poster} source={posters[index - 1]} />
-            <Text style={styles.title}>{item.node.title}</Text>
+            <SharedElement id={`item.${item.node.episodeID}.poster`}>
+              <Image style={styles.poster} source={posters[index - 1]} />
+            </SharedElement>
+            <SharedElement id={`item.${item.node.episodeID}.title`}>
+              <Text style={styles.title}>{item.node.title}</Text>
+            </SharedElement>
             <Text style={styles.date}>{item.node.releaseDate}</Text>
           </TouchableOpacity>
         </Animated.View>
@@ -225,6 +229,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
     fontWeight: 'bold',
+    width: '100%',
   },
   date: {
     fontSize: 14,

@@ -26,7 +26,9 @@
     "react-native-reanimated": "^1.13.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.11.0",
-    "react-native-svg": "^12.1.0"
+    "react-native-shared-element": "^0.7.0",
+    "react-native-svg": "^12.1.0",
+    "react-navigation-shared-element": "^5.0.0-alpha1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
