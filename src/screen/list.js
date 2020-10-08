@@ -15,6 +15,7 @@ import {useQuery} from '@apollo/client';
 import {SharedElement} from 'react-navigation-shared-element';
 import {gql} from '@apollo/client';
 import {Container} from '@common-component';
+import MovieItem from '@screen-component/list/item';
 import MaskedView from '@react-native-community/masked-view';
 import Svg, {Rect} from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
@@ -36,6 +37,7 @@ const GET_ALL_FILMS = gql`
           title
           episodeID
           releaseDate
+          isInCart @client
         }
       }
     }
@@ -101,6 +103,7 @@ export default function List({navigation}) {
   let {loading, data, error} = useQuery(GET_ALL_FILMS, {});
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
+  console.log('response', loading, data, error)
   if (loading) {
     return (
       <View style={styles.loadingWrapper}>
@@ -132,7 +135,7 @@ export default function List({navigation}) {
       inputRange,
       outputRange: [100, 50, 100],
     });
-    console.log('item is', `item.${item.node.id}.poster`);
+
     return (
       <View style={styles.itemWrapper}>
         <Animated.View
@@ -150,7 +153,7 @@ export default function List({navigation}) {
             <SharedElement id={`item.${item.node.episodeID}.title`}>
               <Text style={styles.title}>{item.node.title}</Text>
             </SharedElement>
-            <Text style={styles.date}>{item.node.releaseDate}</Text>
+            {/* <Text style={styles.date}>{item.node.releaseDate}</Text> */}
           </TouchableOpacity>
         </Animated.View>
       </View>
@@ -161,13 +164,16 @@ export default function List({navigation}) {
     ...data.allFilms.edges,
     {key: 'right-spacer'},
   ];
+  console.log('list is', data)
   return (
     <Container style={styles.container}>
       <Backdrop movies={movies} scrollX={scrollX} />
       <Animated.FlatList
         showsHorizontalScrollIndicator={false}
         data={movies}
-        renderItem={renderItem}
+        renderItem={({item, index}) => <MovieItem item={item} index={index} scrollX={scrollX} onSelect={() => navigation.push('Detail', {
+          movie: {...item, poster: posters[index - 1]},
+        })}/>}
         keyExtractor={(item, index) => index.toString()}
         horizontal={true}
         snapToInterval={ITEM_SIZE}

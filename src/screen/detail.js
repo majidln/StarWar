@@ -15,8 +15,8 @@ export default function Detail({route}) {
           <Image source={movie.poster} style={styles.poster} />
         </SharedElement>
         <SharedElement id={`item.${movie.node.episodeID}.title`}>
-          <Text style={styles.title}>{movie.node.title}</Text>
-        </SharedElement>
+            <Text style={styles.title}>{movie.node.title}</Text>
+          </SharedElement>
       </View>
     </Container>
   );
