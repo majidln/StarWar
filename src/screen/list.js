@@ -37,21 +37,12 @@ const GET_ALL_FILMS = gql`
           title
           episodeID
           releaseDate
-          isInCart @client
+          poster @client
         }
       }
     }
   }
 `;
-
-const posters = [
-  require('./../../assets/poster/1.png'),
-  require('./../../assets/poster/2.png'),
-  require('./../../assets/poster/3.png'),
-  require('./../../assets/poster/4.png'),
-  require('./../../assets/poster/5.png'),
-  require('./../../assets/poster/6.png'),
-];
 
 const Backdrop = ({movies, scrollX}) => {
   return (
@@ -85,7 +76,7 @@ const Backdrop = ({movies, scrollX}) => {
               <Image
                 style={{width, height: BACKDROP_HEIGHT}}
                 resizeMode="cover"
-                source={posters[index - 1]}
+                source={item.node.poster}
               />
             </MaskedView>
           );
@@ -103,7 +94,7 @@ export default function List({navigation}) {
   let {loading, data, error} = useQuery(GET_ALL_FILMS, {});
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
-  console.log('response', loading, data, error)
+  console.log('response', loading, data, error);
   if (loading) {
     return (
       <View style={styles.loadingWrapper}>
@@ -122,58 +113,30 @@ export default function List({navigation}) {
     return <Text>No data!</Text>;
   }
 
-  const renderItem = ({item, index}) => {
-    if (!item.node) {
-      return <View style={styles.dummySpacer} />;
-    }
-    const inputRange = [
-      (index - 2) * ITEM_SIZE,
-      (index - 1) * ITEM_SIZE,
-      (index + 2) * ITEM_SIZE,
-    ];
-    const translateY = scrollX.interpolate({
-      inputRange,
-      outputRange: [100, 50, 100],
-    });
-
-    return (
-      <View style={styles.itemWrapper}>
-        <Animated.View
-          style={{...styles.itemInnerWrapper, transform: [{translateY}]}}>
-          <TouchableOpacity
-            style={styles.contentWrapper}
-            onPress={() => {
-              navigation.push('Detail', {
-                movie: {...item, poster: posters[index - 1]},
-              });
-            }}>
-            <SharedElement id={`item.${item.node.episodeID}.poster`}>
-              <Image style={styles.poster} source={posters[index - 1]} />
-            </SharedElement>
-            <SharedElement id={`item.${item.node.episodeID}.title`}>
-              <Text style={styles.title}>{item.node.title}</Text>
-            </SharedElement>
-            {/* <Text style={styles.date}>{item.node.releaseDate}</Text> */}
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
-    );
-  };
   const movies = [
     {key: 'left-spacer'},
     ...data.allFilms.edges,
     {key: 'right-spacer'},
   ];
-  console.log('list is', data)
+  console.log('list is', data);
   return (
     <Container style={styles.container}>
       <Backdrop movies={movies} scrollX={scrollX} />
       <Animated.FlatList
         showsHorizontalScrollIndicator={false}
         data={movies}
-        renderItem={({item, index}) => <MovieItem item={item} index={index} scrollX={scrollX} onSelect={() => navigation.push('Detail', {
-          movie: {...item, poster: posters[index - 1]},
-        })}/>}
+        renderItem={({item, index}) => (
+          <MovieItem
+            item={item}
+            index={index}
+            scrollX={scrollX}
+            onSelect={() =>
+              navigation.push('Detail', {
+                movie: {...item},
+              })
+            }
+          />
+        )}
         keyExtractor={(item, index) => index.toString()}
         horizontal={true}
         snapToInterval={ITEM_SIZE}

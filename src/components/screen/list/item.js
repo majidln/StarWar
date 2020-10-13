@@ -1,5 +1,13 @@
 import React from 'react';
-import {StyleSheet, Dimensions, View, Animated, TouchableOpacity, Image, Text} from 'react-native';
+import {
+  StyleSheet,
+  Dimensions,
+  View,
+  Animated,
+  TouchableOpacity,
+  Image,
+  Text,
+} from 'react-native';
 import {SharedElement} from 'react-navigation-shared-element';
 
 const {width, height} = Dimensions.get('window');
@@ -7,16 +15,7 @@ const ITEM_SIZE = width * 0.72;
 const SPACING = 10;
 const SPACER_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 
-const posters = [
-  require('./../../../../assets/poster/1.png'),
-  require('./../../../../assets/poster/2.png'),
-  require('./../../../../assets/poster/3.png'),
-  require('./../../../../assets/poster/4.png'),
-  require('./../../../../assets/poster/5.png'),
-  require('./../../../../assets/poster/6.png'),
-];
-
-export default function ListItem ({item, index, scrollX, onSelect}){
+export default function ListItem({item, index, scrollX, onSelect}) {
   if (!item.node) {
     return <View style={styles.dummySpacer} />;
   }
@@ -38,7 +37,7 @@ export default function ListItem ({item, index, scrollX, onSelect}){
           style={styles.contentWrapper}
           onPress={() => onSelect()}>
           <SharedElement id={`item.${item.node.episodeID}.poster`}>
-            <Image style={styles.poster} source={posters[index - 1]} />
+            <Image style={styles.poster} source={item.node.poster} />
           </SharedElement>
           <SharedElement id={`item.${item.node.episodeID}.title`}>
             <Text style={styles.title}>{item.node.title}</Text>
@@ -47,7 +46,7 @@ export default function ListItem ({item, index, scrollX, onSelect}){
       </Animated.View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   itemWrapper: {
@@ -85,4 +84,4 @@ const styles = StyleSheet.create({
   dummySpacer: {
     width: SPACER_ITEM_SIZE,
   },
-})
+});
