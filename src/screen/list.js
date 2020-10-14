@@ -23,6 +23,7 @@ const GET_ALL_FILMS = gql`
           title
           episodeID
           releaseDate
+          director
           poster @client
         }
       }
@@ -34,7 +35,6 @@ export default function List({navigation}) {
   let {loading, data, error} = useQuery(GET_ALL_FILMS, {});
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
-  console.log('response', loading, data, error);
   if (loading) {
     return (
       <View style={styles.loadingWrapper}>
