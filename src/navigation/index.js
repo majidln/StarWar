@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
+// import {createStackNavigator} from '@react-navigation/stack';
 
 import ListScreen from '@screens/list';
 import DetailScreen from '@screens/detail';
 
-const Stack = createStackNavigator();
+const Stack = createSharedElementStackNavigator();
 
 function MainStackNavigator() {
   return (
@@ -20,7 +21,18 @@ function MainStackNavigator() {
           options={ListScreen.navigationOptions}
           header={null}
         />
-        <Stack.Screen name="Detail" component={DetailScreen} header={null} />
+        <Stack.Screen
+          name="Detail"
+          component={DetailScreen}
+          header={null}
+          sharedElementsConfig={(route, otherRoute, showing) => {
+            const {movie} = route.params;
+            return [
+              `item.${movie.node.episodeID}.poster`,
+              `item.${movie.node.episodeID}.title`,
+            ];
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
