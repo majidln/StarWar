@@ -1,24 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  Animated,
-  Text,
-  View,
-  FlatList,
-  StyleSheet,
-  Image,
-  Dimensions,
-} from 'react-native';
+import {Animated, Text, View, FlatList, StyleSheet, Image} from 'react-native';
 import MaskedView from '@react-native-community/masked-view';
 import Svg, {Rect} from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
+import {
+  width,
+  height,
+  SPACING,
+  ITEM_SIZE,
+  BACKDROP_HEIGHT,
+} from '@services/constants';
 
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
-
-const {width, height} = Dimensions.get('window');
-const SPACING = 10;
-const ITEM_SIZE = width * 0.72;
-const BACKDROP_HEIGHT = height * 0.6;
 
 export default function Backdrop({movies, scrollX}) {
   return (

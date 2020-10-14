@@ -5,7 +5,6 @@ import {
   Text,
   View,
   StyleSheet,
-  Dimensions,
   ActivityIndicator,
 } from 'react-native';
 import {useQuery} from '@apollo/client';
@@ -13,10 +12,7 @@ import {gql} from '@apollo/client';
 import {Container} from '@common-component';
 import MovieItem from '@screen-component/list/item';
 import Backdrop from '@screen-component/list/backdrop';
-
-const {width} = Dimensions.get('window');
-const SPACING = 10;
-const ITEM_SIZE = width * 0.72;
+import {SPACING, ITEM_SIZE} from '@services/constants';
 
 const GET_ALL_FILMS = gql`
   query {
