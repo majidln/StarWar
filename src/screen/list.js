@@ -25,6 +25,7 @@ const GET_ALL_FILMS = gql`
           releaseDate
           director
           poster @client
+          rank @client
         }
       }
     }

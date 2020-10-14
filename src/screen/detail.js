@@ -16,7 +16,9 @@ export default function Detail({route}) {
           <Image source={movie.node.poster} style={styles.poster} />
         </SharedElement>
         <Text style={styles.title}>{movie.node.title}</Text>
-        <Rank />
+        <View style={styles.contentWrapper}>
+          <Rank rank={movie.node.rank} />
+        </View>
       </View>
     </Container>
   );
@@ -34,5 +36,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  contentWrapper: {
+    paddingHorizontal: 10,
   },
 });

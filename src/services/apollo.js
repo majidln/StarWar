@@ -13,6 +13,12 @@ const cache = new InMemoryCache({
             return posters[variables.readField('episodeID')];
           },
         },
+        rank: {
+          read() {
+            // create random number between 4.1 to 5 for movie ranking
+            return (Math.random() * (4.1 - 5) + 5).toFixed(1);
+          },
+        },
       },
     },
   },
