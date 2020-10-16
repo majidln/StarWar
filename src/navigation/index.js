@@ -29,7 +29,6 @@ function MainStackNavigator() {
             const {movie} = route.params;
             return [
               `item.${movie.node.episodeID}.poster`,
-              `item.${movie.node.episodeID}.title`,
             ];
           }}
         />
