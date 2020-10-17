@@ -39,9 +39,7 @@ export default function ListItem({item, index, scrollX, onSelect}) {
           <SharedElement id={`item.${item.node.episodeID}.poster`}>
             <Image style={styles.poster} source={item.node.poster} />
           </SharedElement>
-          <SharedElement id={`item.${item.node.episodeID}.title`}>
-            <Text style={styles.title}>{item.node.title}</Text>
-          </SharedElement>
+          <Text style={styles.title}>{item.node.title}</Text>
         </TouchableOpacity>
       </Animated.View>
     </View>
