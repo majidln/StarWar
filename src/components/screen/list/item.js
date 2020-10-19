@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     textAlign: 'center',
-    fontWeight: 'bold',
     width: '100%',
+    fontFamily: 'StarJedi',
   },
   date: {
     fontSize: 14,
