@@ -17,7 +17,12 @@ export default function Detail({route}) {
         </SharedElement>
         <Text style={styles.title}>{movie.node.title}</Text>
         <View style={styles.contentWrapper}>
-          <Rank rank={movie.node.rank} />
+          <View style={styles.rankWrapper}>
+            <Rank rank={movie.node.rank} />
+          </View>
+          <View style={styles.releaseWrapper}>
+            <Text style={styles.release}>{movie.node.releaseDate}</Text>
+          </View>
         </View>
       </View>
     </Container>
@@ -35,9 +40,19 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 22,
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontFamily: 'StarJedi',
   },
   contentWrapper: {
     paddingHorizontal: 10,
+    flexDirection: 'row',
+  },
+  rankWrapper: {
+    flex: 1,
+  },
+  releaseWrapper: {
+    flex: 1,
+  },
+  release: {
+    textAlign: 'right',
   },
 });

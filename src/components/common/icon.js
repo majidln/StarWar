@@ -1,17 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // FontAwesome.loadFont();
 
-export class Icon extends Component {
-  render() {
-    const {name, color, size, style} = this.props;
-    return (
-      <FontAwesome
-        name={name}
-        color={color || 'black'}
-        size={size || 20}
-        style={style}
-      />
-    );
-  }
+export function Icon({name, color = 'black', size = 20, style = {}}) {
+  return <FontAwesome name={name} color={color} size={size} style={style} />;
 }
