@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {SharedElement} from 'react-navigation-shared-element';
 
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 const ITEM_SIZE = width * 0.72;
 const SPACING = 10;
 const SPACER_ITEM_SIZE = (width - ITEM_SIZE) / 2;
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 34,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     textAlign: 'center',
     width: '100%',
     fontFamily: 'StarJedi',
