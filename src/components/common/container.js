@@ -15,6 +15,6 @@ export class Container extends Component {
 const styles = {
   wrapper: {
     flex: 1,
-    backgroundColor: theme.primary,
+    backgroundColor: theme.bg,
   },
 };
