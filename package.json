@@ -2,6 +2,7 @@
   "name": "StarWar",
   "version": "0.0.1",
   "private": true,
+  "author": "Majid Lotfinia",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -15,6 +16,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
+    "cross-fetch": "^3.0.6",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.11.0",
     "node-fetch": "^2.6.1",

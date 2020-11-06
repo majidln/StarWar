@@ -1,12 +1,14 @@
 import 'react-native';
 import React from 'react';
 import App from '../src/App';
-
+import {ApolloProvider} from '@apollo/client';
+import {client} from '@services/apollo';
 import renderer from 'react-test-renderer';
 
-// render app test case
-it('renders correctly', () => {
-  jest.useFakeTimers();
-  const tree = renderer.create(<App />).toJSON();
-  expect(tree).toMatchSnapshot();
+it('renders app correctly', () => {
+  renderer.create(
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>,
+  );
 });
