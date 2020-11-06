@@ -8,7 +8,7 @@ const POSTER_HEIGHT = height * 0.68;
 
 export default function Detail({route}) {
   const {movie} = route.params;
-  console.log('movie is', movie);
+
   return (
     <Container>
       <View style={styles.wrapper}>
