@@ -1,3 +1,4 @@
+import 'cross-fetch/polyfill';
 import {ApolloClient, InMemoryCache} from '@apollo/client';
 import {posters} from '@services/constants';
 
