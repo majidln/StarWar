@@ -2,13 +2,43 @@ import React from 'react';
 import {Image, View, Text, StyleSheet, Dimensions} from 'react-native';
 import {Container, Rank} from '@common-component';
 import {SharedElement} from 'react-navigation-shared-element';
+import {useQuery} from '@apollo/client';
+import {gql} from '@apollo/client';
 
 const {height} = Dimensions.get('window');
 const POSTER_HEIGHT = height * 0.68;
 
+const GET_FILM_DETAIL = gql`
+  query {
+    film($id: ID) {
+      id
+      title
+      characterConnection {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
+      vehicleConnection {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
 export default function Detail({route}) {
   const {movie} = route.params;
-
+  let {loading, data, error} = useQuery(GET_FILM_DETAIL, {
+    variables: {id: "ZmlsbXM6MQ=="},
+  });
+  console.log('film detail', data);
   return (
     <Container>
       <View style={styles.wrapper}>
